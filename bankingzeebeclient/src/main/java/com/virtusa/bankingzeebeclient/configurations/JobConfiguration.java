@@ -13,10 +13,11 @@ import java.util.Random;
 @Configuration
 @Slf4j
 public class JobConfiguration {
-
+    //bean
     @JobWorker(type = "initiator",autoComplete = false)
     public HashMap<String,Object> applicationNoGenerator(final JobClient jobClient, ActivatedJob activatedJob){
 
+        log.info("Jobclient...."+activatedJob.getKey());
         //generate loan application no
         HashMap<String,Object> map =new HashMap<>();
         map.put("applicationNo", new Random().nextInt(1000000));
