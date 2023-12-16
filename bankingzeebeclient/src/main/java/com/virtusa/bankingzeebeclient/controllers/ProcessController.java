@@ -26,7 +26,7 @@ public class ProcessController {
                 .latestVersion()
                 .send();
 
-        return ResponseEntity.status(HttpStatus.OK).body("Process Started..."+ProcessConstant.BPMN_PROCESS_ID)
+        return ResponseEntity.status(HttpStatus.OK).body("Process Started..."+ProcessConstant.BPMN_PROCESS_ID);
 
 
 
