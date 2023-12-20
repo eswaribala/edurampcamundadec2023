@@ -54,24 +54,26 @@ public class JobConfiguration {
     	LocalDate dob=LocalDate.parse(response.get("dob").toString());
         log.info("The DOB ="+dob);
         long age=ChronoUnit.YEARS.between(dob,LocalDate.now());
-        
-        response.put("age", age);
+        Map<String,Object> validateMap= activatedJob.getVariablesAsMap();
+        validateMap.put("age", age);
         if(dob.isBefore(LocalDate.now())&&(age>=21)) {    	
         	
-        	response.put("isAgeValid", true);
+        	validateMap.put("isAgeValid", true);
         jobClient.newCompleteCommand(activatedJob.getKey())
+                .variables(validateMap)
                 .send().exceptionally(throwable -> {
                    throw new RuntimeException("Exception due to non available job");
                 });
          
         }else {        
-        	response.put("isAgeValid", false);
+        	validateMap.put("isAgeValid", false);
         jobClient.newCompleteCommand(activatedJob.getKey())
+        .variables(validateMap)
                 .send().exceptionally(throwable -> {
                    throw new RuntimeException("Exception due to non available job");
                 });
         }
-        return response;
+        return validateMap;
     }
     
 }
