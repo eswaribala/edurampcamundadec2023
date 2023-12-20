@@ -1,6 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.18.0" camunda:diagramRelationId="bb602fe7-bd9f-4d93-98ff-1162a9d5204e">
   <bpmn:process id="Process_Loan" name="loanprocess" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="UserTaskForm_1rhithk">{
+  "components": [
+    {
+      "text": "Loan Application",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1r0jbfg",
+        "columns": null
+      },
+      "id": "Field_07lzf2w"
+    },
+    {
+      "label": "Application No",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1rsdf5r",
+        "columns": null
+      },
+      "id": "Field_0qs5o2j",
+      "key": "applicationNo",
+      "readonly": true
+    },
+    {
+      "label": "First Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0nrey1h",
+        "columns": null
+      },
+      "id": "Field_0vjyr3s",
+      "key": "firstName",
+      "validate": {
+        "required": true,
+        "minLength": 5,
+        "maxLength": 25,
+        "pattern": "[A-Za-z]{5,25}"
+      }
+    },
+    {
+      "label": "Last Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1hxx4g5",
+        "columns": null
+      },
+      "id": "Field_1ie9q1o",
+      "key": "lastName",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 10,
+        "pattern": "[A-Za-z]{3,10}"
+      }
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "DOB",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1gdn26b",
+        "columns": null
+      },
+      "id": "Field_111cjuo",
+      "key": "dob",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "Male",
+          "value": "Male"
+        },
+        {
+          "label": "Female",
+          "value": "Female"
+        },
+        {
+          "label": "Transgender",
+          "value": "Transgender"
+        }
+      ],
+      "label": "Gender",
+      "type": "radio",
+      "layout": {
+        "row": "Row_1r631ia",
+        "columns": null
+      },
+      "id": "Field_0ehr5fp",
+      "key": "gender",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "Government",
+          "value": "Government"
+        },
+        {
+          "label": "Public",
+          "value": "Public"
+        },
+        {
+          "label": "Private",
+          "value": "Private"
+        }
+      ],
+      "label": "Occupation",
+      "type": "select",
+      "layout": {
+        "row": "Row_0iompwv",
+        "columns": null
+      },
+      "id": "Field_05dr7io",
+      "key": "occupation",
+      "searchable": true,
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "CIBIL Score",
+      "type": "number",
+      "layout": {
+        "row": "Row_1nqgknx",
+        "columns": null
+      },
+      "id": "Field_1lzslyo",
+      "key": "cibilScore",
+      "validate": {
+        "required": true,
+        "min": 100,
+        "max": 900
+      },
+      "increment": "10"
+    },
+    {
+      "label": "Having Own House?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0zes2y3",
+        "columns": null
+      },
+      "id": "Field_1l7fgnf",
+      "key": "ownHouse",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Is Everything Correct?*",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0zes2y3",
+        "columns": null
+      },
+      "id": "Field_0wtngs4",
+      "key": "correct"
+    }
+  ],
+  "type": "default",
+  "id": "Form_Loan",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.4.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "schemaVersion": 13
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1i3p42e</bpmn:outgoing>
     </bpmn:startEvent>
@@ -27,7 +204,7 @@
     <bpmn:sequenceFlow id="Flow_1jmm42z" sourceRef="Activity_LoanForm" targetRef="Event_0ww4zgz" />
     <bpmn:userTask id="Activity_LoanForm" name="Fill Loan Application ">
       <bpmn:extensionElements>
-        <zeebe:formDefinition formId="Form_Loan" />
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:UserTaskForm_1rhithk" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1psupsh</bpmn:incoming>
       <bpmn:outgoing>Flow_1jmm42z</bpmn:outgoing>
