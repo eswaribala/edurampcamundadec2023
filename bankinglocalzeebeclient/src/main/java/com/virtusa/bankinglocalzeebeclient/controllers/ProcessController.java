@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.virtusa.bankinglocalzeebeclient.configurations.ProcessConstant;
+import com.virtusa.bankinglocalzeebeclient.services.ProcessInfoService;
 
 @RestController
 @RequestMapping("/processes")
@@ -19,6 +20,9 @@ public class ProcessController {
 
     @Autowired
     private ZeebeClient zeebeClient;
+    
+    @Autowired
+    private ProcessInfoService processInfoService;
 
     @GetMapping("/")
     public ResponseEntity<?> startProcess(){
@@ -32,4 +36,6 @@ public class ProcessController {
 
 
     }
+    
+  
 }

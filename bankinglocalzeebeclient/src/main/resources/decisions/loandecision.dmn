@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_Loan" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.18.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0">
+  <description>Loan Decision</description>
+  <decision id="Decision_Task" name="Decision Task">
+    <decisionTable id="DecisionTable_08r34mq">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="number">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_06wvetg">
+        <inputExpression id="LiteralExpression_0vy7tmo" typeRef="string">
+          <text>gender</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_06ikp0o">
+          <text>"Male","Female"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_1mu2b6z">
+        <inputExpression id="LiteralExpression_1aful57" typeRef="number">
+          <text>cibilScore</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1chmlyq">
+        <inputExpression id="LiteralExpression_13gv56u" typeRef="boolean">
+          <text>ownHouse</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0c65ytj">
+        <inputExpression id="LiteralExpression_0k1jllk" typeRef="boolean">
+          <text>job</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="decision" typeRef="string">
+        <outputValues id="UnaryTests_1ikjdbb">
+          <text>"accepted","rejected"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1hv4cw3">
+        <inputEntry id="UnaryTests_0raycg4">
+          <text>[21..45]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14fuwrj">
+          <text>"Male"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0t13lzb">
+          <text>[700..900]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wq2gcv">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0g3wzyd">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bxvqs4">
+          <text>"accepted"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1u5xnug">
+        <inputEntry id="UnaryTests_1ckf6fy">
+          <text>[46..60]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ah3ajo">
+          <text>"Female"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fql9uv">
+          <text>[700..900]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13hxsax">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a130dr">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xcq1a8">
+          <text>"accepted"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_127g6q2">
+        <inputEntry id="UnaryTests_03gobvq">
+          <text>[35..50]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y14w28">
+          <text>"Male"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rm42zh">
+          <text>[600..800]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05w2k23">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1h710qh">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vhri6t">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b7l4f4">
+        <inputEntry id="UnaryTests_1rh23oy">
+          <text>[65..80]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03q3u5m">
+          <text>"Male","Female"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1awdniw">
+          <text>[800..900]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16n0rsl">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bmyvnq">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_194t10h">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0i01n1q">
+        <inputEntry id="UnaryTests_1l9igv0">
+          <text>&gt;=81</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xy9jx2">
+          <text>"Male","Female"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1dx07xz">
+          <text>[800..900]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lygwle">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_116hbtx">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15n5ls5">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_Task">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

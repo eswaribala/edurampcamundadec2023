@@ -1,0 +1,37 @@
+server:
+  port: 7070
+
+keycloak:
+  username: admin
+  password: admin
+  realm: master
+  uri: http://localhost:18080/auth
+  auth-server-url: ${keycloak.uri}/realms/${keycloak.realm}/protocol/openid-connect/auth?client_id=security-admin-console&redirect_ui=http://localhost:8081/identity-callback
+
+springdoc:
+  swagger-ui:
+    oauth:
+      clientId: ${keycloak.username}
+      clientSecret: ${keycloak.password}
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${keycloak.uri}/realms/${keycloak.realm}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+      client:
+        registration:
+          keycloak:
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: ${keycloak.uri}/realms/${keycloak.realm}
+
+jwt:
+  auth:
+    converter:
+      resource-id: ${keycloak.username}
+      principle_attribute: preferred_username
