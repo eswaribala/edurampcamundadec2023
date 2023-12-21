@@ -97,14 +97,26 @@ public class JobConfiguration {
         /*
          *create email sending snippet 
          */
+        HashMap<String,Object> map =new HashMap<>();
+        int genCode=new Random().nextInt(100,500);
+        
+        if(genCode<300) {
         
         //generate loan application no
-        HashMap<String,Object> map =new HashMap<>();
+        
         map.put("status", true);
         jobClient.newCompleteCommand(activatedJob.getKey())
                 .variables(map).send().exceptionally(throwable -> {
                    throw new RuntimeException("Exception due to non available job");
                 });
+        }else {
+        	
+        	map.put("status", false);
+            jobClient.newCompleteCommand(activatedJob.getKey())
+                    .variables(map).send().exceptionally(throwable -> {
+                       throw new RuntimeException("Exception due to non available job");
+                    });
+        }
         
 
     }
