@@ -2,7 +2,7 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_Loan" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.18.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0">
   <description>Loan Decision</description>
   <decision id="Decision_Task" name="Decision Task">
-    <decisionTable id="DecisionTable_08r34mq">
+    <decisionTable id="DecisionTable_08r34mq" hitPolicy="FIRST">
       <input id="Input_1">
         <inputExpression id="InputExpression_1" typeRef="number">
           <text>age</text>
@@ -137,6 +137,26 @@
         </inputEntry>
         <outputEntry id="LiteralExpression_15n5ls5">
           <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jypptj">
+        <inputEntry id="UnaryTests_0ojt6bo">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hxaemu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1u97gi8">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c7m1i6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bhjcnt">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ybc71r">
+          <text>"N/A"</text>
         </outputEntry>
       </rule>
     </decisionTable>
