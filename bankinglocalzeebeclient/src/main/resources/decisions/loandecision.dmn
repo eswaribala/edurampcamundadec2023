@@ -27,9 +27,12 @@
         </inputExpression>
       </input>
       <input id="InputClause_0c65ytj">
-        <inputExpression id="LiteralExpression_0k1jllk" typeRef="boolean">
-          <text>job</text>
+        <inputExpression id="LiteralExpression_0k1jllk" typeRef="string">
+          <text>occupation</text>
         </inputExpression>
+        <inputValues id="UnaryTests_15okp39">
+          <text>"Government","Public","Private","Nothing"</text>
+        </inputValues>
       </input>
       <output id="Output_1" name="decision" typeRef="string">
         <outputValues id="UnaryTests_1ikjdbb">
@@ -50,7 +53,7 @@
           <text>true</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0g3wzyd">
-          <text>true</text>
+          <text>"Government"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1bxvqs4">
           <text>"accepted"</text>
@@ -70,7 +73,7 @@
           <text>true</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1a130dr">
-          <text>true</text>
+          <text>"Public"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0xcq1a8">
           <text>"accepted"</text>
@@ -90,7 +93,7 @@
           <text>false</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1h710qh">
-          <text>false</text>
+          <text>"Private"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0vhri6t">
           <text>"rejected"</text>
@@ -110,7 +113,7 @@
           <text>true</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1bmyvnq">
-          <text>true</text>
+          <text>"Nothing"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_194t10h">
           <text>"rejected"</text>
@@ -130,7 +133,7 @@
           <text>false</text>
         </inputEntry>
         <inputEntry id="UnaryTests_116hbtx">
-          <text>false</text>
+          <text>"Nothing"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_15n5ls5">
           <text>"rejected"</text>

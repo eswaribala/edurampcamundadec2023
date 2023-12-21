@@ -108,6 +108,10 @@
         {
           "label": "Private",
           "value": "Private"
+        },
+        {
+          "label": "Nothing",
+          "value": "Nothing"
         }
       ],
       "label": "Occupation",
