@@ -88,4 +88,24 @@ public class JobConfiguration {
         return validateMap;
     }
     
+    
+    //bean
+    @JobWorker(type = "sendMail",autoComplete = false)
+    public void sendEmail(final JobClient jobClient, ActivatedJob activatedJob){
+
+        log.info("Jobclient...."+activatedJob.getKey());
+        /*
+         *create email sending snippet 
+         */
+        
+        //generate loan application no
+        HashMap<String,Object> map =new HashMap<>();
+        map.put("status", true);
+        jobClient.newCompleteCommand(activatedJob.getKey())
+                .variables(map).send().exceptionally(throwable -> {
+                   throw new RuntimeException("Exception due to non available job");
+                });
+        
+
+    }
 }
