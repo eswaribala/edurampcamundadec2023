@@ -104,7 +104,7 @@ public class JobConfiguration {
         
         //generate loan application no
         
-        map.put("status", false);
+        map.put("status", true);
         jobClient.newCompleteCommand(activatedJob.getKey())
                 .variables(map).send().exceptionally(throwable -> {
                    throw new RuntimeException("Exception due to non available job");
@@ -124,8 +124,7 @@ public class JobConfiguration {
     @JobWorker(type = "emailInitiator",autoComplete = false)
     public void emailInitiator(final JobClient jobClient, ActivatedJob activatedJob){
           
-    
-    	
+      	
     	
     	Map<String,Object> response= activatedJob.getVariablesAsMap();
         log.info("The Generated Result="+response.get("decision"));
