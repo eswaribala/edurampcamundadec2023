@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_19x7obz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.18.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0">
-  <bpmn:process id="Process_1ln9mu5" isExecutable="true">
+  <bpmn:process id="Process_Travel" name="Travel Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_Trip" name="Trip Started">
       <bpmn:outgoing>Flow_0n6dkn0</bpmn:outgoing>
     </bpmn:startEvent>
@@ -11,13 +11,13 @@
       <bpmn:startEvent id="Event_Hotel_Booking_Start" name="Hotel Booking Started">
         <bpmn:outgoing>Flow_1pobxql</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_1pobxql" sourceRef="Event_Hotel_Booking_Start" targetRef="Activity_028he56" />
-      <bpmn:sequenceFlow id="Flow_16t0v42" sourceRef="Activity_028he56" targetRef="Activity_Credit_Card" />
-      <bpmn:endEvent id="Event_1tz32np">
+      <bpmn:sequenceFlow id="Flow_1pobxql" sourceRef="Event_Hotel_Booking_Start" targetRef="Activity_Book_Hotel" />
+      <bpmn:sequenceFlow id="Flow_16t0v42" sourceRef="Activity_Book_Hotel" targetRef="Activity_Credit_Card" />
+      <bpmn:endEvent id="Event_Booking_Success" name="Hotel_Booking_Successful">
         <bpmn:incoming>Flow_1fil8jl</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1fil8jl" sourceRef="Activity_Credit_Card" targetRef="Event_1tz32np" />
-      <bpmn:serviceTask id="Activity_028he56" name="Book Hotel">
+      <bpmn:sequenceFlow id="Flow_1fil8jl" sourceRef="Activity_Credit_Card" targetRef="Event_Booking_Success" />
+      <bpmn:serviceTask id="Activity_Book_Hotel" name="Book Hotel">
         <bpmn:extensionElements>
           <zeebe:taskDefinition type="bookHotel" />
         </bpmn:extensionElements>
@@ -33,12 +33,12 @@
         <bpmn:outgoing>Flow_1fil8jl</bpmn:outgoing>
         <bpmn:outgoing>Flow_0v8hvz2</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0v8hvz2" sourceRef="Activity_Credit_Card" targetRef="Event_1dp5sbb" />
-      <bpmn:endEvent id="Event_1dp5sbb">
+      <bpmn:sequenceFlow id="Flow_0v8hvz2" sourceRef="Activity_Credit_Card" targetRef="Event_Credit_Card_Failed" />
+      <bpmn:endEvent id="Event_Credit_Card_Failed" name="Credit Card Failed Error">
         <bpmn:incoming>Flow_0v8hvz2</bpmn:incoming>
         <bpmn:errorEventDefinition id="ErrorEventDefinition_0i4t1wv" errorRef="Error_0v6prk7" />
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_14n0xxh" sourceRef="Activity_028he56" targetRef="Event_Cancel" />
+      <bpmn:sequenceFlow id="Flow_14n0xxh" sourceRef="Activity_Book_Hotel" targetRef="Event_Cancel" />
       <bpmn:endEvent id="Event_Cancel" name="Cancel Booking">
         <bpmn:incoming>Flow_14n0xxh</bpmn:incoming>
         <bpmn:errorEventDefinition id="ErrorEventDefinition_0sg3br1" errorRef="Error_0qnamqw" />
@@ -50,8 +50,8 @@
       <bpmn:textAnnotation id="TextAnnotation_07rvsif">
         <bpmn:text>Credit Card Validation Failed</bpmn:text>
       </bpmn:textAnnotation>
-      <bpmn:association id="Association_1eswedd" sourceRef="Event_1dp5sbb" targetRef="TextAnnotation_07rvsif" />
-      <bpmn:association id="Association_0gwkznm" sourceRef="Activity_028he56" targetRef="TextAnnotation_00883xm" />
+      <bpmn:association id="Association_1eswedd" sourceRef="Event_Credit_Card_Failed" targetRef="TextAnnotation_07rvsif" />
+      <bpmn:association id="Association_0gwkznm" sourceRef="Activity_Book_Hotel" targetRef="TextAnnotation_00883xm" />
       <bpmn:association id="Association_1v3mhpx" sourceRef="Activity_Credit_Card" targetRef="TextAnnotation_0ojx70l" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0n6dkn0" sourceRef="StartEvent_Trip" targetRef="Activity_0keal31" />
@@ -59,19 +59,19 @@
       <bpmn:incoming>Flow_066315p</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_066315p" sourceRef="Activity_0keal31" targetRef="Event_Successful" />
-    <bpmn:boundaryEvent id="Event_0z8o1ee" name="Cancel Booking Capture" attachedToRef="Activity_0keal31">
+    <bpmn:boundaryEvent id="Event_Booking_Cancellation" name="Cancel Booking Capture" attachedToRef="Activity_0keal31">
       <bpmn:outgoing>Flow_1kwf4pm</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_19zz2kw" errorRef="Error_0qnamqw" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_0mteexp" name="Credit Card Error Capture" attachedToRef="Activity_0keal31">
+    <bpmn:boundaryEvent id="Event_Credit_Card_Error_capture" name="Credit Card Error Capture" attachedToRef="Activity_0keal31">
       <bpmn:outgoing>Flow_0j85lte</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0js6tz9" errorRef="Error_0v6prk7" />
     </bpmn:boundaryEvent>
     <bpmn:endEvent id="Event_18piop8">
       <bpmn:incoming>Flow_1kwf4pm</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1kwf4pm" sourceRef="Event_0z8o1ee" targetRef="Event_18piop8" />
-    <bpmn:sequenceFlow id="Flow_0j85lte" sourceRef="Event_0mteexp" targetRef="Activity_0keal31" />
+    <bpmn:sequenceFlow id="Flow_1kwf4pm" sourceRef="Event_Booking_Cancellation" targetRef="Event_18piop8" />
+    <bpmn:sequenceFlow id="Flow_0j85lte" sourceRef="Event_Credit_Card_Error_capture" targetRef="Activity_0keal31" />
     <bpmn:textAnnotation id="TextAnnotation_1frtvwt">
       <bpmn:text>Trip Started</bpmn:text>
     </bpmn:textAnnotation>
@@ -86,7 +86,7 @@
   <bpmn:error id="Error_0qnamqw" name="Error_Cancel_Booking" errorCode="1" />
   <bpmn:error id="Error_0v6prk7" name="Error_Credit_Card" errorCode="2" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1ln9mu5">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Travel">
       <bpmndi:BPMNShape id="TextAnnotation_1frtvwt_di" bpmnElement="TextAnnotation_1frtvwt" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="160" y="130" width="100" height="30" />
         <bpmndi:BPMNLabel />
@@ -131,7 +131,7 @@
           <dc:Bounds x="324" y="275" width="69" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qqsu91_di" bpmnElement="Activity_028he56" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+      <bpmndi:BPMNShape id="Activity_0qqsu91_di" bpmnElement="Activity_Book_Hotel" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="430" y="210" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -145,11 +145,17 @@
         <dc:Bounds x="610" y="210" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1tz32np_di" bpmnElement="Event_1tz32np" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+      <bpmndi:BPMNShape id="Event_1tz32np_di" bpmnElement="Event_Booking_Success" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="792" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="770" y="275" width="86" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1doelyc_di" bpmnElement="Event_1dp5sbb" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+      <bpmndi:BPMNShape id="Event_1doelyc_di" bpmnElement="Event_Credit_Card_Failed" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="792" y="312" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="766" y="355" width="90" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1v3mhpx_di" bpmnElement="Association_1v3mhpx">
         <di:waypoint x="676" y="210" />
@@ -193,13 +199,13 @@
         <di:waypoint x="202" y="232" />
         <di:waypoint x="209" y="160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0vdbjk1_di" bpmnElement="Event_0z8o1ee" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+      <bpmndi:BPMNShape id="Event_0vdbjk1_di" bpmnElement="Event_Booking_Cancellation" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="492" y="452" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="473" y="495" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_10nibol_di" bpmnElement="Event_0mteexp" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+      <bpmndi:BPMNShape id="Event_10nibol_di" bpmnElement="Event_Credit_Card_Error_capture" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="692" y="452" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="670" y="495" width="85" height="27" />

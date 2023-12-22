@@ -41,6 +41,19 @@ public class ProcessController {
 
     }
     
+    @GetMapping("/travel")
+    public ResponseEntity<?> startTravelProcess(){
+
+        zeebeClient.newCreateInstanceCommand().bpmnProcessId(ProcessConstant.TRAVEL_BPMN_PROCESS_ID)
+                .latestVersion()
+                .send();
+
+        return ResponseEntity.status(HttpStatus.OK).body("Process Started..."+ProcessConstant.TRAVEL_BPMN_PROCESS_ID);
+
+
+
+    }
+    
     @GetMapping("/triggerautodebit")
     public ResponseEntity<?> triggerAutoDebitStartEvent(){
     	
