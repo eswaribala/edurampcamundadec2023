@@ -396,6 +396,7 @@
       </bpmn:userTask>
       <bpmn:association id="Association_1h2hhmn" sourceRef="Event_EMI_Message" targetRef="TextAnnotation_0p7upoq" />
       <bpmn:association id="Association_0u0buzf" sourceRef="Activity_Notify" targetRef="TextAnnotation_1qpedqk" />
+      <bpmn:association id="Association_0646dsy" sourceRef="Activity_Deduct" targetRef="TextAnnotation_1obi8q0" />
     </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_1sxrav6">
       <bpmn:text>Intiate Process associated Bean</bpmn:text>
@@ -426,7 +427,6 @@
     <bpmn:textAnnotation id="TextAnnotation_1obi8q0">
       <bpmn:text>Auto debit EMI if sufficient balance available</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_0646dsy" sourceRef="Activity_Deduct" targetRef="TextAnnotation_1obi8q0" />
     <bpmn:textAnnotation id="TextAnnotation_1qpedqk">
       <bpmn:text>Send Notification to Customer in case of insufficient balance</bpmn:text>
     </bpmn:textAnnotation>
@@ -518,10 +518,7 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1aaof20_di" bpmnElement="Activity_055s7q1" isExpanded="true">
-        <dc:Bounds x="270" y="460" width="550" height="290" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0k6h67k_di" bpmnElement="Event_0k6h67k">
-        <dc:Bounds x="682" y="542" width="36" height="36" />
+        <dc:Bounds x="270" y="460" width="670" height="290" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0v3v0ag_di" bpmnElement="Event_Legal_Notice" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="692" y="662" width="36" height="36" />
@@ -539,27 +536,34 @@
           <dc:Bounds x="303" y="585" width="75" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k6h67k_di" bpmnElement="Event_0k6h67k">
+        <dc:Bounds x="752" y="542" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_091zco2_di" bpmnElement="Activity_Deduct" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="440" y="520" width="100" height="80" />
+        <dc:Bounds x="470" y="520" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0646dsy_di" bpmnElement="Association_0646dsy">
+        <di:waypoint x="519" y="520" />
+        <di:waypoint x="519" y="425" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0tmn21m_di" bpmnElement="Event_Retry">
-        <dc:Bounds x="472" y="582" width="36" height="36" />
+        <dc:Bounds x="502" y="582" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="452" y="625" width="80" height="14" />
+          <dc:Bounds x="482" y="625" width="80" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ejwitm_di" bpmnElement="Flow_1ejwitm">
         <di:waypoint x="358" y="560" />
-        <di:waypoint x="440" y="560" />
+        <di:waypoint x="470" y="560" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17h530r_di" bpmnElement="Flow_17h530r">
-        <di:waypoint x="540" y="560" />
-        <di:waypoint x="682" y="560" />
+        <di:waypoint x="570" y="560" />
+        <di:waypoint x="752" y="560" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12zx652_di" bpmnElement="Flow_12zx652">
-        <di:waypoint x="490" y="618" />
-        <di:waypoint x="490" y="680" />
+        <di:waypoint x="520" y="618" />
+        <di:waypoint x="520" y="680" />
         <di:waypoint x="550" y="680" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xmzkbt_di" bpmnElement="Flow_1xmzkbt">
@@ -684,10 +688,6 @@
       <bpmndi:BPMNEdge id="Association_1fr5c8h_di" bpmnElement="Association_1fr5c8h" bioc:stroke="#5b176d" color:border-color="#5b176d">
         <di:waypoint x="757.5" y="140" />
         <di:waypoint x="770" y="80" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0646dsy_di" bpmnElement="Association_0646dsy">
-        <di:waypoint x="497" y="520" />
-        <di:waypoint x="515" y="425" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_148iot6_di" bpmnElement="Association_148iot6">
         <di:waypoint x="727" y="676" />
