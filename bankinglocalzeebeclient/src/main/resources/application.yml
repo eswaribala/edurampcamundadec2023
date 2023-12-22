@@ -1,37 +1,25 @@
 server:
   port: 7070
-
-keycloak:
-  username: admin
-  password: admin
-  realm: master
-  uri: http://localhost:18080/auth
-  auth-server-url: http://localhost:18080/auth/realms/master/protocol/openid-connect/auth
-
-springdoc:
-  swagger-ui:
-    oauth:
-      clientId: camunda-identity
-      clientSecret: HnKx4i4Mv8cBRIoFyznllf5SzyqMeuyj
-
 spring:
+  profiles:
+    active: dev
+
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:18080/auth/realms/master
-          jwk-set-uri: http://localhost:18080/auth/realms/master/protocol/openid-connect/certs
-      client:
-        registration:
-          keycloak:
-            authorization-grant-type: client_credentials
-            scope: openid
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:18080/auth/realms/master
+          issuer-uri: http://host.docker.internal:18080/auth/realms/Keycloak_Realm
+          jwk-set-uri: http://host.docker.internal:18080/auth/realms/Keycloak_Realm/protocol/openid-connect/certs
 
-jwt:
-  auth:
-    converter:
-      resource-id: camunda-identity
-      principle_attribute: preferred_username
+module-name: mymodule
+api-version: 1.0z
+
+springdoc:
+  swagger-ui:
+    oauth:
+      clientId: swagger-test
+      clientSecret: vigneshbala
+  oAuthFlow:
+    authorizationUrl: http://lhost.docker.internal:18080/auth/realms/Keycloak_Realm/protocol/openid-connect/auth
+    tokenUrl: http://host.docker.internal:18080/auth/realms/Keycloak_Realm/protocol/openid-connect/token
+    use-pkce-with-authorization-code-grant: true

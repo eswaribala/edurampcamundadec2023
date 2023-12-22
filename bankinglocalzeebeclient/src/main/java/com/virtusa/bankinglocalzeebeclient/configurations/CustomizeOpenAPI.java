@@ -1,8 +1,11 @@
 package com.virtusa.bankinglocalzeebeclient.configurations;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -15,6 +18,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 
 @Configuration
+@CrossOrigin("*")
 class CustomizeOpenAPI{
 private static final String OAUTH_SCHEME = "auth";
 @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
@@ -44,5 +48,6 @@ private OAuthFlows createOAuthFlows() {
             .scopes(new Scopes());
     return new OAuthFlows().authorizationCode(oauthFlow);
 }
+
 
 }

@@ -26,42 +26,23 @@ public class ProcessInfoService {
     private String kcAccessToken;
 	
 	public void getProcessDefinitions() {
-		HttpHeaders headers = new HttpHeaders();
 		
-		 headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-	       headers.add("Accept", "application/json");
-	      
-	       
-	    MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-	    map.add("client_id","camunda-identity");
-	    map.add("client_secret","HnKx4i4Mv8cBRIoFyznllf5SzyqMeuyj");
-	    map.add("grant_type","client_credentials");
-	    
-	       
-	       
-	       HttpEntity<MultiValueMap<String,String>> entity = new HttpEntity<>(map, headers);
-          log.info(entity.getBody().toString());
 	    ResponseEntity<JsonNode> responseEntity = null;
+	    HttpHeaders headers = new HttpHeaders();
       try {
-          responseEntity = restTemplate.postForEntity("http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token", entity, JsonNode.class);
-          JsonNode jsonNode=responseEntity.getBody();
-          JsonNode recdToken=jsonNode.get("access_token"); 
-          String encoded_String = new String(recdToken.toPrettyString().getBytes(), StandardCharsets.UTF_8); 
           
-          kcAccessToken=encoded_String; 
-          log.info("Token"+kcAccessToken);
-          headers = new HttpHeaders();
+        
           headers.setContentType(MediaType.APPLICATION_JSON);
-          headers.add(HttpHeaders.AUTHORIZATION, "Bearer "+kcAccessToken);
+        
          // headers.set("Authorization", "bearer "+kcAccessToken);
 
          HttpEntity<String> request = new HttpEntity<String>(null,headers);
 
-          ResponseEntity<String> responseEntityStr = restTemplate.
-                  exchange("http://localhost:8081/v1/process-definitions/search", HttpMethod.GET, request,
-                          String.class);
-          System.out.println(responseEntityStr.getBody());
-          System.out.println("token : {} Verification Passed"+kcAccessToken);
+       responseEntity = restTemplate.
+                  exchange("http://host.docker.internal:8081/v1/process-definitions/search", HttpMethod.GET, request,
+                          JsonNode.class);
+          System.out.println(responseEntity.getBody());
+          
           
       } catch (Exception e) {
           e.printStackTrace();

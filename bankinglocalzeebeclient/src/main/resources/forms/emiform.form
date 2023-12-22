@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "text": "Low Balance Notification",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0mq5cmc",
+        "columns": null
+      },
+      "id": "Field_1usee9l"
+    },
+    {
+      "label": "Do you have sufficient money to deduct?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1gu6pl7",
+        "columns": null
+      },
+      "id": "Field_0wqn2d5",
+      "key": "sufficientMoney"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1u3ixrd",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "schemaVersion": 13
+}
