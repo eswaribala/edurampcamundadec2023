@@ -210,6 +210,39 @@
   },
   "schemaVersion": 13
 }</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="UserTaskForm_3d49dom">{
+  "components": [
+    {
+      "text": "System Deduct EMI",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0rnb228",
+        "columns": null
+      },
+      "id": "Field_1clf7r9"
+    },
+    {
+      "label": "Amount Deducted",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0gx8cra",
+        "columns": null
+      },
+      "id": "Field_1q4v00x",
+      "key": "amountDeducted"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0iwi4ew",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "schemaVersion": 13
+}</zeebe:userTaskForm>
     </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1i3p42e</bpmn:outgoing>
@@ -326,13 +359,6 @@
         <bpmn:incoming>Flow_17h530r</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_17h530r" sourceRef="Activity_Deduct" targetRef="Event_0k6h67k" />
-      <bpmn:serviceTask id="Activity_Deduct" name="Deduct EMI">
-        <bpmn:extensionElements>
-          <zeebe:taskDefinition type="deductEMI" />
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1ejwitm</bpmn:incoming>
-        <bpmn:outgoing>Flow_17h530r</bpmn:outgoing>
-      </bpmn:serviceTask>
       <bpmn:endEvent id="Event_Legal_Notice" name="Legal Notice">
         <bpmn:extensionElements>
           <zeebe:taskDefinition type="legalNoticeMessage" />
@@ -360,7 +386,16 @@
         <bpmn:outgoing>Flow_1ejwitm</bpmn:outgoing>
         <bpmn:messageEventDefinition id="MessageEventDefinition_0hbqs2w" messageRef="Message_26snand" />
       </bpmn:startEvent>
+      <bpmn:userTask id="Activity_Deduct" name="System Deduct EMI">
+        <bpmn:extensionElements>
+          <zeebe:assignmentDefinition assignee="demo" />
+          <zeebe:formDefinition formKey="camunda-forms:bpmn:UserTaskForm_3d49dom" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1ejwitm</bpmn:incoming>
+        <bpmn:outgoing>Flow_17h530r</bpmn:outgoing>
+      </bpmn:userTask>
       <bpmn:association id="Association_1h2hhmn" sourceRef="Event_EMI_Message" targetRef="TextAnnotation_0p7upoq" />
+      <bpmn:association id="Association_0u0buzf" sourceRef="Activity_Notify" targetRef="TextAnnotation_1qpedqk" />
     </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_1sxrav6">
       <bpmn:text>Intiate Process associated Bean</bpmn:text>
@@ -388,6 +423,17 @@
     <bpmn:textAnnotation id="TextAnnotation_0p7upoq">
       <bpmn:text>Triggered by API - Auto Debit</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_1obi8q0">
+      <bpmn:text>Auto debit EMI if sufficient balance available</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0646dsy" sourceRef="Activity_Deduct" targetRef="TextAnnotation_1obi8q0" />
+    <bpmn:textAnnotation id="TextAnnotation_1qpedqk">
+      <bpmn:text>Send Notification to Customer in case of insufficient balance</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_13rorcc">
+      <bpmn:text>After three retry legal notice will be issued</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_148iot6" sourceRef="Event_Legal_Notice" targetRef="TextAnnotation_13rorcc" />
   </bpmn:process>
   <bpmn:error id="Error_1abdvx0" name="Error_Email_Sending" errorCode="1001" />
   <bpmn:message id="Message_26snand" name="Message_EMI_Ref">
@@ -399,6 +445,18 @@
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Loan">
       <bpmndi:BPMNShape id="TextAnnotation_0p7upoq_di" bpmnElement="TextAnnotation_0p7upoq" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="170" y="395" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1obi8q0_di" bpmnElement="TextAnnotation_1obi8q0" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="470" y="381" width="170" height="44" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1qpedqk_di" bpmnElement="TextAnnotation_1qpedqk" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="660" y="810" width="200" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_13rorcc_di" bpmnElement="TextAnnotation_13rorcc" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="880" y="620" width="100" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
@@ -502,10 +560,6 @@
       <bpmndi:BPMNShape id="Activity_1aaof20_di" bpmnElement="Activity_055s7q1" isExpanded="true">
         <dc:Bounds x="270" y="460" width="550" height="290" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0fm5xzk_di" bpmnElement="Activity_Deduct" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="440" y="520" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0v3v0ag_di" bpmnElement="Event_Legal_Notice" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="692" y="662" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -525,9 +579,17 @@
           <dc:Bounds x="303" y="585" width="75" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_091zco2_di" bpmnElement="Activity_Deduct" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="440" y="520" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1h2hhmn_di" bpmnElement="Association_1h2hhmn">
         <di:waypoint x="329" y="546" />
         <di:waypoint x="241" y="436" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0u0buzf_di" bpmnElement="Association_0u0buzf">
+        <di:waypoint x="630" y="720" />
+        <di:waypoint x="699" y="810" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0tmn21m_di" bpmnElement="Event_Retry">
         <dc:Bounds x="472" y="582" width="36" height="36" />
@@ -551,6 +613,14 @@
       <bpmndi:BPMNEdge id="Flow_1xmzkbt_di" bpmnElement="Flow_1xmzkbt">
         <di:waypoint x="650" y="680" />
         <di:waypoint x="692" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0646dsy_di" bpmnElement="Association_0646dsy">
+        <di:waypoint x="497" y="520" />
+        <di:waypoint x="515" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_148iot6_di" bpmnElement="Association_148iot6">
+        <di:waypoint x="727" y="676" />
+        <di:waypoint x="880" y="645" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_04mx9bt_di" bpmnElement="Event_0scctd9" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1652" y="407" width="36" height="36" />

@@ -136,24 +136,23 @@ public class JobConfiguration {
 
     }
     
-    @JobWorker(type = "deductEMI",autoComplete = false)
-    public void deductEMI(final JobClient jobClient, ActivatedJob activatedJob){
-          
-          	
-    	Map<String,Object> response= activatedJob.getVariablesAsMap();
-    	boolean money=Boolean.parseBoolean(response.get("sufficientMoney").toString());
-        log.info("The Generated Result="+money);
-        if(money) {
-    	
-          jobClient.newCompleteCommand(activatedJob.getKey())
-                .send().exceptionally(throwable -> {
-                   throw new RuntimeException("Exception due to non available job");
-                });
-        }
-        	
-         
-
-    }
+	/*
+	 * @JobWorker(type = "deductEMI",autoComplete = false) public void
+	 * deductEMI(final JobClient jobClient, ActivatedJob activatedJob){
+	 * 
+	 * 
+	 * Map<String,Object> response= activatedJob.getVariablesAsMap(); boolean
+	 * money=Boolean.parseBoolean(response.get("sufficientMoney").toString());
+	 * log.info("The Generated Result="+money); if(money) {
+	 * 
+	 * jobClient.newCompleteCommand(activatedJob.getKey())
+	 * .send().exceptionally(throwable -> { throw new
+	 * RuntimeException("Exception due to non available job"); }); }
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
     
     @JobWorker(type = "legalNoticeMessage",autoComplete = false)
     public void raiseLegalNotice(final JobClient jobClient, ActivatedJob activatedJob){

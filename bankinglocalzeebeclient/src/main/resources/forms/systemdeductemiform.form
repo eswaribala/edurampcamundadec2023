@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "text": "System Deduct EMI",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0rnb228",
+        "columns": null
+      },
+      "id": "Field_1clf7r9"
+    },
+    {
+      "label": "Amount Deducted",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0gx8cra",
+        "columns": null
+      },
+      "id": "Field_1q4v00x",
+      "key": "amountDeducted"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0iwi4ew",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "schemaVersion": 13
+}
