@@ -18,9 +18,6 @@
       <bpmn:serviceTask id="Activity_Book_Hotel" name="Book Hotel">
         <bpmn:extensionElements>
           <zeebe:taskDefinition type="bookHotel" />
-          <zeebe:ioMapping>
-            <zeebe:output target="names" />
-          </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1pobxql</bpmn:incoming>
         <bpmn:outgoing>Flow_1czo3l4</bpmn:outgoing>
