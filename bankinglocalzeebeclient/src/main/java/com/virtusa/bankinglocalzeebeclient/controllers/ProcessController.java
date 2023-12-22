@@ -4,6 +4,7 @@ import io.camunda.zeebe.client.ZeebeClient;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,12 +43,16 @@ public class ProcessController {
     
     @GetMapping("/triggerautodebit")
     public ResponseEntity<?> triggerAutoDebitStartEvent(){
+    	
+    	HashMap<String,Boolean> money=new HashMap<>();
+    	money.put("sufficientMoney", false);
 
         zeebeClient.newPublishMessageCommand()
         .messageName("Message_EMI_Ref")
         .correlationKey("1001")
         .messageId("Event_EMI_Message")
         .timeToLive(Duration.ofMinutes(10))
+        .variables(money)
         .send()
         .exceptionally(throwable -> {
             throw new RuntimeException("Could not complete job " + zeebeClient, throwable);

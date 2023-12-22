@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import com.virtusa.bankinglocalzeebeclient.dtos.LegalNotice;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -123,17 +125,51 @@ public class JobConfiguration {
     
     @JobWorker(type = "emailInitiator",autoComplete = false)
     public void emailInitiator(final JobClient jobClient, ActivatedJob activatedJob){
-          
-      	
-    	
-    	Map<String,Object> response= activatedJob.getVariablesAsMap();
-        log.info("The Generated Result="+response.get("decision"));
+	     
     	
         jobClient.newCompleteCommand(activatedJob.getKey())
+                .send().exceptionally(throwable -> {
+                   throw new RuntimeException("Exception due to non available job");
+                });   
+    	
+    	
+
+    }
+    
+    @JobWorker(type = "deductEMI",autoComplete = false)
+    public void deductEMI(final JobClient jobClient, ActivatedJob activatedJob){
+          
+          	
+    	Map<String,Object> response= activatedJob.getVariablesAsMap();
+    	boolean money=Boolean.parseBoolean(response.get("sufficientMoney").toString());
+        log.info("The Generated Result="+money);
+        if(money) {
+    	
+          jobClient.newCompleteCommand(activatedJob.getKey())
+                .send().exceptionally(throwable -> {
+                   throw new RuntimeException("Exception due to non available job");
+                });
+        }
+        	
+         
+
+    }
+    
+    @JobWorker(type = "legalNoticeMessage",autoComplete = false)
+    public void raiseLegalNotice(final JobClient jobClient, ActivatedJob activatedJob){
+          
+      	HashMap<String,LegalNotice> legalNotice=new HashMap<>();
+      	legalNotice.put("legalNotice", 
+      			new LegalNotice("L3247","Bank","EMI Due Date Exceeded",LocalDate.of(2024, 1, 10)));
+        
+    	
+        jobClient.newCompleteCommand(activatedJob.getKey())
+        .variables(legalNotice)
                 .send().exceptionally(throwable -> {
                    throw new RuntimeException("Exception due to non available job");
                 });
          
 
     }
+    
 }
