@@ -70,12 +70,26 @@ public class TravelJobConfiguration {
 		
 		Map<String,Object> data=activatedJob.getVariablesAsMap();
 		List<String> names=(List<String>) data.get("names");
-		names.stream().forEach(System.out::println);
 		
+		names.stream().forEach(System.out::println);
+		Map<String,Boolean> validationData=new HashMap<String,Boolean>();
+		
+		if(names.get(0).length()>5) {
+			validationData.put("validation", true);
 		jobClient.newCompleteCommand(activatedJob.getKey())
+		.variables(validationData)
         .send().exceptionally(throwable -> {
            throw new RuntimeException("Exception due to non available job");
-        });
+        });}else {
+        	validationData.put("validation", false);
+        	jobClient.newCompleteCommand(activatedJob.getKey())
+        	.variables(validationData)
+            .send().exceptionally(throwable -> {
+               throw new RuntimeException("Exception due to non available job");
+            });
+        }
+        	
+		
  
 	}
 
