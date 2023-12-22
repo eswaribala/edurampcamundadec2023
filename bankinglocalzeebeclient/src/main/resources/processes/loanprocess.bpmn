@@ -321,10 +321,6 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0n4wyx5" sourceRef="Event_0scctd9" targetRef="Activity_Email_Initiator" />
     <bpmn:subProcess id="Activity_055s7q1" triggeredByEvent="true">
-      <bpmn:startEvent id="Event_EMI_Message" name="EMI Auto Debit" isInterrupting="false">
-        <bpmn:outgoing>Flow_1ejwitm</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_177ei5b" messageRef="Message_26snand" />
-      </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_1ejwitm" sourceRef="Event_EMI_Message" targetRef="Activity_Deduct" />
       <bpmn:endEvent id="Event_0k6h67k">
         <bpmn:incoming>Flow_17h530r</bpmn:incoming>
@@ -360,6 +356,10 @@
         <bpmn:incoming>Flow_12zx652</bpmn:incoming>
         <bpmn:outgoing>Flow_1xmzkbt</bpmn:outgoing>
       </bpmn:userTask>
+      <bpmn:startEvent id="Event_EMI_Message" name="EMI Auto Debit" isInterrupting="false">
+        <bpmn:outgoing>Flow_1ejwitm</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0hbqs2w" messageRef="Message_26snand" />
+      </bpmn:startEvent>
       <bpmn:association id="Association_1h2hhmn" sourceRef="Event_EMI_Message" targetRef="TextAnnotation_0p7upoq" />
     </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_1sxrav6">
@@ -502,12 +502,6 @@
       <bpmndi:BPMNShape id="Activity_1aaof20_di" bpmnElement="Activity_055s7q1" isExpanded="true">
         <dc:Bounds x="270" y="460" width="550" height="290" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_19vcn6k_di" bpmnElement="Event_EMI_Message">
-        <dc:Bounds x="322" y="542" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="303" y="585" width="75" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fm5xzk_di" bpmnElement="Activity_Deduct" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="440" y="520" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -524,6 +518,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0k6h67k_di" bpmnElement="Event_0k6h67k">
         <dc:Bounds x="682" y="542" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17im1be_di" bpmnElement="Event_EMI_Message">
+        <dc:Bounds x="322" y="542" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="303" y="585" width="75" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1h2hhmn_di" bpmnElement="Association_1h2hhmn">
         <di:waypoint x="329" y="546" />
