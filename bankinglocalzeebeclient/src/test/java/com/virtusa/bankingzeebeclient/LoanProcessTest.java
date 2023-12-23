@@ -1,5 +1,10 @@
 package com.virtusa.bankingzeebeclient;
 
+import io.camunda.zeebe.client.api.response.ActivateJobsResponse;
+import io.camunda.zeebe.client.api.response.ActivatedJob;
+import io.camunda.zeebe.process.test.assertions.JobAssert;
+import io.camunda.zeebe.process.test.inspections.InspectionUtility;
+import io.camunda.zeebe.process.test.inspections.model.InspectedProcessInstance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,8 @@ import io.camunda.zeebe.process.test.assertions.DeploymentAssert;
 import io.camunda.zeebe.process.test.assertions.ProcessInstanceAssert;
 import io.camunda.zeebe.process.test.extension.ZeebeProcessTest;
 import io.camunda.zeebe.process.test.filters.RecordStream;
+
+import java.util.Optional;
 
 @ZeebeProcessTest
 public class LoanProcessTest {
@@ -47,15 +54,15 @@ public class LoanProcessTest {
     @Test
     public void testProcessInstanceByGeneratedKey() {
     	Optional<InspectedProcessInstance> firstProcessInstance = InspectionUtility.findProcessInstances()
-    			  .withParentProcessInstanceKey(<key>)
-    			  .withBpmnProcessId(84588345L)
+    			  .withParentProcessInstanceKey(348657436L)
+    			  .withBpmnProcessId("")
     			  .findFirstProcessInstance();
     			ProcessInstanceAssert assertions = BpmnAssert.assertThat(firstProcessInstance.get());
     }
 
      @Test
      public void testActivatedJob(){
-         ActivateJobsResponse response = client.newActivateJobsCommand()
+         ActivateJobsResponse response = zeebeClient.newActivateJobsCommand()
                  .jobType("getRandomNo")
                  .maxJobsToActivate(1)
                  .send()
