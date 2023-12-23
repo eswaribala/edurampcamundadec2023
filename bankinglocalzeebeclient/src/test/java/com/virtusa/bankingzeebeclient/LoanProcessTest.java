@@ -53,11 +53,12 @@ public class LoanProcessTest {
 
     @Test
     public void testProcessInstanceByGeneratedKey() {
-    	Optional<InspectedProcessInstance> firstProcessInstance = InspectionUtility.findProcessInstances()
-    			  .withParentProcessInstanceKey(348657436L)
-    			  .withBpmnProcessId("")
-    			  .findFirstProcessInstance();
-    			ProcessInstanceAssert assertions = BpmnAssert.assertThat(firstProcessInstance.get());
+        Optional<InspectedProcessInstance> firstProcessInstance =
+                InspectionUtility.findProcessInstances()
+                        .withParentProcessInstanceKey(2251799813685944L)
+                        .withBpmnProcessId("Process_Travel")
+                        .findFirstProcessInstance();
+        ProcessInstanceAssert assertions = BpmnAssert.assertThat(firstProcessInstance.get());
     }
 
      @Test
