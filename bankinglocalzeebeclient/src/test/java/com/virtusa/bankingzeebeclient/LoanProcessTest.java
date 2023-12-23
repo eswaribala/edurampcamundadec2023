@@ -1,8 +1,7 @@
 package com.virtusa.bankingzeebeclient;
 
-import io.camunda.zeebe.client.api.response.ActivateJobsResponse;
-import io.camunda.zeebe.client.api.response.ActivatedJob;
-import io.camunda.zeebe.process.test.assertions.JobAssert;
+import io.camunda.zeebe.client.api.response.*;
+import io.camunda.zeebe.process.test.assertions.*;
 import io.camunda.zeebe.process.test.inspections.InspectionUtility;
 import io.camunda.zeebe.process.test.inspections.model.InspectedProcessInstance;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.camunda.zeebe.client.ZeebeClient;
-import io.camunda.zeebe.client.api.response.DeploymentEvent;
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
-import io.camunda.zeebe.process.test.assertions.BpmnAssert;
-import io.camunda.zeebe.process.test.assertions.DeploymentAssert;
-import io.camunda.zeebe.process.test.assertions.ProcessInstanceAssert;
 import io.camunda.zeebe.process.test.extension.ZeebeProcessTest;
 import io.camunda.zeebe.process.test.filters.RecordStream;
 
@@ -76,6 +70,18 @@ public class LoanProcessTest {
              List<ActivatedJob> activatedJob = response.getJobs();
              BpmnAssert.assertThat(activatedJob.get(0));
          }
+     }
+
+     @Test
+     public void testMessageAssertions(){
+         testProcessInstanceByGeneratedKey();
+         PublishMessageResponse response = zeebeClient
+                 .newPublishMessageCommand()
+                 .messageName("Message_EMI_Ref")
+                 .correlationKey("1001")
+                 .send()
+                 .join();
+         MessageAssert assertions = BpmnAssert.assertThat(response);
      }
 
 	
