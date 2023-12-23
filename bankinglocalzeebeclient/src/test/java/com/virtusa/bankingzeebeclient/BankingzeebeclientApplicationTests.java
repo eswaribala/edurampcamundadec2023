@@ -68,7 +68,7 @@ public class BankingzeebeclientApplicationTests {
 				  .join();
 				ProcessInstanceAssert assertions = BpmnAssert.assertThat(event);
 	}
-	
+	@Test
 	public void testProcessByInstanceKey() {
 		Optional<InspectedProcessInstance> firstProcessInstance = 
 				InspectionUtility.findProcessInstances()

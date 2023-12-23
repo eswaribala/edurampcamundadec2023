@@ -25,7 +25,7 @@ public class LoanProcessTest {
     public void deployProcessTest() {
     	
     DeploymentEvent event=zeebeClient.newDeployResourceCommand()
-    	  .addResourceFromClasspath("/processes/loanprocess.bpmn")
+    	  .addResourceFromClasspath("processes/loanprocess.bpmn")
     	  .send()
     	  .join();
     	
@@ -43,7 +43,26 @@ public class LoanProcessTest {
     ProcessInstanceAssert assertions=BpmnAssert.assertThat(event);
     	       
     }
-    
-    
+
+    @Test
+    public void testProcessInstanceByGeneratedKey() {
+    	Optional<InspectedProcessInstance> firstProcessInstance = InspectionUtility.findProcessInstances()
+    			  .withParentProcessInstanceKey(<key>)
+    			  .withBpmnProcessId(84588345L)
+    			  .findFirstProcessInstance();
+    			ProcessInstanceAssert assertions = BpmnAssert.assertThat(firstProcessInstance.get());
+    }
+
+     @Test
+     public void testActivatedJob(){
+         ActivateJobsResponse response = client.newActivateJobsCommand()
+                 .jobType("getRandomNo")
+                 .maxJobsToActivate(1)
+                 .send()
+                 .join();
+         ActivatedJob activatedJob = response.getJobs().get(0);
+         JobAssert assertions = BpmnAssert.assertThat(activatedJob);
+     }
+
 	
 }
