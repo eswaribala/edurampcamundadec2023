@@ -118,7 +118,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Travel">
       <bpmndi:BPMNShape id="TextAnnotation_1swlnej_di" bpmnElement="TextAnnotation_1swlnej" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="1140" y="110" width="220" height="50" />
+        <dc:Bounds x="1140" y="160" width="220" height="50" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_Trip" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
@@ -246,8 +246,8 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1gb55pl_di" bpmnElement="Association_1gb55pl">
-        <di:waypoint x="1151" y="275" />
-        <di:waypoint x="1181" y="160" />
+        <di:waypoint x="1154" y="275" />
+        <di:waypoint x="1178" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_10nibol_di" bpmnElement="Event_Credit_Card_Error_capture" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="692" y="452" width="36" height="36" />
