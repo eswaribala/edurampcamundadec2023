@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="6c0f1c1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="b2e84846-7acd-47ec-bf77-43b4137c2cfd">
+  <bpmn:process id="Process_Role" name="Role Process" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_18pagqj">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "text": "Need Approval",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_183efwf",
+        "columns": null
+      },
+      "id": "Field_1vjbntr"
+    },
+    {
+      "label": "Approve it",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_04f0goh",
+        "columns": null
+      },
+      "id": "Field_1sbuvod",
+      "key": "approval"
+    }
+  ],
+  "type": "default",
+  "id": "Form_199z6bx"
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="Event_1qtg6m8">
+      <bpmn:outgoing>Flow_0lsp6o8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0lsp6o8" sourceRef="Event_1qtg6m8" targetRef="Activity_0ilz601" />
+    <bpmn:sequenceFlow id="Flow_0gabxdr" sourceRef="Activity_0ilz601" targetRef="Activity_0o5tks9" />
+    <bpmn:sequenceFlow id="Flow_1gchl5u" sourceRef="Activity_0o5tks9" targetRef="Activity_13vaga4" />
+    <bpmn:endEvent id="Event_13zhnnj">
+      <bpmn:incoming>Flow_1xz3smz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1xz3smz" sourceRef="Activity_13vaga4" targetRef="Event_13zhnnj" />
+    <bpmn:serviceTask id="Activity_0ilz601" name="Assign Activity">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="assign_activity" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lsp6o8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gabxdr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Activity_0o5tks9" name="Decide the Role?">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="Decision_Role" resultVariable="roles" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0gabxdr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gchl5u</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="Activity_13vaga4" name="Assign to user">
+      <bpmn:extensionElements>
+        <zeebe:assignmentDefinition assignee="${assignee}" candidateUsers="${candidateusers}" />
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_18pagqj" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1gchl5u</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xz3smz</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Role">
+      <bpmndi:BPMNShape id="Event_1qtg6m8_di" bpmnElement="Event_1qtg6m8" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="152" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13zhnnj_di" bpmnElement="Event_13zhnnj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="722" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10wkqwm_di" bpmnElement="Activity_0ilz601" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="240" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06h2hd5_di" bpmnElement="Activity_0o5tks9" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="400" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xnrfc8_di" bpmnElement="Activity_13vaga4" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="560" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lsp6o8_di" bpmnElement="Flow_0lsp6o8">
+        <di:waypoint x="188" y="100" />
+        <di:waypoint x="240" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gabxdr_di" bpmnElement="Flow_0gabxdr">
+        <di:waypoint x="340" y="100" />
+        <di:waypoint x="400" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gchl5u_di" bpmnElement="Flow_1gchl5u">
+        <di:waypoint x="500" y="100" />
+        <di:waypoint x="560" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xz3smz_di" bpmnElement="Flow_1xz3smz">
+        <di:waypoint x="660" y="100" />
+        <di:waypoint x="722" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

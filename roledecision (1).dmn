@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_Role" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.15.2" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0" camunda:diagramRelationId="8d0caee9-803a-4fc4-a82f-3feb9acfd7b2">
+  <decision id="Decision_Role" name="Role_Assignment">
+    <decisionTable id="DecisionTable_0c6zp4g">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>activity</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="assignee" typeRef="string" biodi:width="226" />
+      <output id="OutputClause_03cesxj" name="candidateusers" typeRef="string" biodi:width="278" />
+      <rule id="DecisionRule_04qa0di">
+        <inputEntry id="UnaryTests_1nuqatt">
+          <text>"codedevelopment"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ca4ke8">
+          <text>"vhebcompany@gmail.com"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ky0mv9">
+          <text>""</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jpv6sl">
+        <inputEntry id="UnaryTests_0k0fta3">
+          <text>"codereview"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ddstsz">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1p6qe7r">
+          <text>"eswaribala70@gmail.com,vebconsulting2022@gmail.com"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ccr1k6">
+        <inputEntry id="UnaryTests_0owcvu4">
+          <text>"deployment"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1vkjrhh">
+          <text>""</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00rakwd">
+          <text>"eswaribala70@gmail.com"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_Role">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
