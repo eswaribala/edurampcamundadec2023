@@ -7,7 +7,7 @@
     <bpmn:subProcess id="Activity_0keal31">
       <bpmn:incoming>Flow_0n6dkn0</bpmn:incoming>
       <bpmn:incoming>Flow_0j85lte</bpmn:incoming>
-      <bpmn:outgoing>Flow_066315p</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1921tev</bpmn:outgoing>
       <bpmn:startEvent id="Event_Hotel_Booking_Start" name="Hotel Booking Started">
         <bpmn:outgoing>Flow_1pobxql</bpmn:outgoing>
       </bpmn:startEvent>
@@ -74,9 +74,8 @@
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0n6dkn0" sourceRef="StartEvent_Trip" targetRef="Activity_0keal31" />
     <bpmn:endEvent id="Event_Successful" name="Trip Successful">
-      <bpmn:incoming>Flow_066315p</bpmn:incoming>
+      <bpmn:incoming>Flow_0tch560</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_066315p" sourceRef="Activity_0keal31" targetRef="Event_Successful" />
     <bpmn:boundaryEvent id="Event_Booking_Cancellation" name="Cancel Booking Capture" attachedToRef="Activity_0keal31">
       <bpmn:outgoing>Flow_1kwf4pm</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_19zz2kw" errorRef="Error_0qnamqw" />
@@ -90,6 +89,15 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1kwf4pm" sourceRef="Event_Booking_Cancellation" targetRef="Event_18piop8" />
     <bpmn:sequenceFlow id="Flow_0j85lte" sourceRef="Event_Credit_Card_Error_capture" targetRef="Activity_0keal31" />
+    <bpmn:sequenceFlow id="Flow_1921tev" sourceRef="Activity_0keal31" targetRef="Activity_1xxqlzg" />
+    <bpmn:sequenceFlow id="Flow_0tch560" sourceRef="Activity_1xxqlzg" targetRef="Event_Successful" />
+    <bpmn:serviceTask id="Activity_1xxqlzg" name="Publish Reservation Successful">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="publishReservation" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1921tev</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tch560</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_1frtvwt">
       <bpmn:text>Trip Started</bpmn:text>
     </bpmn:textAnnotation>
@@ -100,21 +108,17 @@
     <bpmn:textAnnotation id="TextAnnotation_0ojx70l">
       <bpmn:text>Credit Card Validation Started</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_1swlnej">
+      <bpmn:text>Hotel will publish reservation success message to kafka</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1gb55pl" sourceRef="Activity_1xxqlzg" targetRef="TextAnnotation_1swlnej" />
   </bpmn:process>
   <bpmn:error id="Error_0qnamqw" name="Error_Cancel_Booking" errorCode="1" />
   <bpmn:error id="Error_0v6prk7" name="Error_Credit_Card" errorCode="2" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Travel">
-      <bpmndi:BPMNShape id="TextAnnotation_1frtvwt_di" bpmnElement="TextAnnotation_1frtvwt" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="160" y="130" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0ojx70l_di" bpmnElement="TextAnnotation_0ojx70l" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="670" y="83" width="100" height="55" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_00883xm_di" bpmnElement="TextAnnotation_00883xm" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="430" y="83" width="100" height="41" />
+      <bpmndi:BPMNShape id="TextAnnotation_1swlnej_di" bpmnElement="TextAnnotation_1swlnej" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1140" y="110" width="220" height="50" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_Trip" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
@@ -123,30 +127,29 @@
           <dc:Bounds x="172" y="275" width="58" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18piop8_di" bpmnElement="Event_18piop8">
-        <dc:Bounds x="582" y="532" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0re9gzn_di" bpmnElement="Event_Successful" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1072" y="242" width="36" height="36" />
+        <dc:Bounds x="1302" y="297" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1054" y="285" width="75" height="14" />
+          <dc:Bounds x="1284" y="340" width="75" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1txt3ao_di" bpmnElement="Activity_1xxqlzg" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1090" y="275" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0keal31_di" bpmnElement="Activity_0keal31" isExpanded="true">
         <dc:Bounds x="300" y="160" width="700" height="310" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_13bx37u_di" bpmnElement="TextAnnotation_13bx37u" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="376" y="380" width="144" height="50" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_07rvsif_di" bpmnElement="TextAnnotation_07rvsif" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="690" y="370" width="100" height="55" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0fv7q2g_di" bpmnElement="Event_Hotel_Booking_Start" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
         <dc:Bounds x="340" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="324" y="275" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tz32np_di" bpmnElement="Event_Booking_Success" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="902" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="275" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qqsu91_di" bpmnElement="Activity_Book_Hotel" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
@@ -157,8 +160,11 @@
         <dc:Bounds x="650" y="210" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0xvyt8u_di" bpmnElement="Gateway_0xvyt8u" isMarkerVisible="true">
-        <dc:Bounds x="565" y="225" width="50" height="50" />
+      <bpmndi:BPMNShape id="Event_1doelyc_di" bpmnElement="Event_Credit_Card_Failed" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="802" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="776" y="375" width="90" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00vyoml_di" bpmnElement="Event_Cancel" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="572" y="332" width="36" height="36" />
@@ -166,37 +172,20 @@
           <dc:Bounds x="554" y="375" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0xvyt8u_di" bpmnElement="Gateway_0xvyt8u" isMarkerVisible="true">
+        <dc:Bounds x="565" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1aoo90p_di" bpmnElement="Gateway_1aoo90p" isMarkerVisible="true">
         <dc:Bounds x="795" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1doelyc_di" bpmnElement="Event_Credit_Card_Failed" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="802" y="332" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="776" y="375" width="90" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="TextAnnotation_13bx37u_di" bpmnElement="TextAnnotation_13bx37u" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="376" y="380" width="144" height="50" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1tz32np_di" bpmnElement="Event_Booking_Success" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="902" y="232" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="880" y="275" width="86" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="TextAnnotation_07rvsif_di" bpmnElement="TextAnnotation_07rvsif" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="690" y="370" width="100" height="55" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0gwkznm_di" bpmnElement="Association_0gwkznm">
-        <di:waypoint x="480" y="210" />
-        <di:waypoint x="480" y="124" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1v3mhpx_di" bpmnElement="Association_1v3mhpx">
-        <di:waypoint x="705" y="210" />
-        <di:waypoint x="715" y="138" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_09o30nn_di" bpmnElement="Association_09o30nn">
-        <di:waypoint x="573" y="356" />
-        <di:waypoint x="510" y="380" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1eswedd_di" bpmnElement="Association_1eswedd">
-        <di:waypoint x="804" y="357" />
-        <di:waypoint x="774" y="370" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pobxql_di" bpmnElement="Flow_1pobxql">
         <di:waypoint x="376" y="250" />
         <di:waypoint x="430" y="250" />
@@ -225,20 +214,51 @@
         <di:waypoint x="820" y="275" />
         <di:waypoint x="820" y="332" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_09qr7gz_di" bpmnElement="Association_09qr7gz">
-        <di:waypoint x="202" y="232" />
-        <di:waypoint x="209" y="160" />
+      <bpmndi:BPMNEdge id="Association_09o30nn_di" bpmnElement="Association_09o30nn">
+        <di:waypoint x="573" y="356" />
+        <di:waypoint x="510" y="380" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0vdbjk1_di" bpmnElement="Event_Booking_Cancellation" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="492" y="452" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="473" y="495" width="78" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Association_1eswedd_di" bpmnElement="Association_1eswedd">
+        <di:waypoint x="804" y="357" />
+        <di:waypoint x="774" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0gwkznm_di" bpmnElement="Association_0gwkznm">
+        <di:waypoint x="480" y="210" />
+        <di:waypoint x="480" y="124" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1v3mhpx_di" bpmnElement="Association_1v3mhpx">
+        <di:waypoint x="705" y="210" />
+        <di:waypoint x="715" y="138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_18piop8_di" bpmnElement="Event_18piop8">
+        <dc:Bounds x="582" y="532" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1frtvwt_di" bpmnElement="TextAnnotation_1frtvwt" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="160" y="130" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_00883xm_di" bpmnElement="TextAnnotation_00883xm" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="430" y="83" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0ojx70l_di" bpmnElement="TextAnnotation_0ojx70l" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="670" y="83" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1gb55pl_di" bpmnElement="Association_1gb55pl">
+        <di:waypoint x="1151" y="275" />
+        <di:waypoint x="1181" y="160" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_10nibol_di" bpmnElement="Event_Credit_Card_Error_capture" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
         <dc:Bounds x="692" y="452" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="670" y="495" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vdbjk1_di" bpmnElement="Event_Booking_Cancellation" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="492" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="473" y="495" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0n6dkn0_di" bpmnElement="Flow_0n6dkn0">
@@ -250,16 +270,24 @@
         <di:waypoint x="510" y="550" />
         <di:waypoint x="582" y="550" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_066315p_di" bpmnElement="Flow_066315p">
-        <di:waypoint x="1000" y="260" />
-        <di:waypoint x="1072" y="260" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0j85lte_di" bpmnElement="Flow_0j85lte">
         <di:waypoint x="710" y="488" />
         <di:waypoint x="710" y="660" />
         <di:waypoint x="230" y="660" />
         <di:waypoint x="230" y="470" />
         <di:waypoint x="310" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_09qr7gz_di" bpmnElement="Association_09qr7gz">
+        <di:waypoint x="202" y="232" />
+        <di:waypoint x="209" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1921tev_di" bpmnElement="Flow_1921tev">
+        <di:waypoint x="1000" y="315" />
+        <di:waypoint x="1090" y="315" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tch560_di" bpmnElement="Flow_0tch560">
+        <di:waypoint x="1190" y="315" />
+        <di:waypoint x="1302" y="315" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
